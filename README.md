@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ARCHIVAL TECHNICAL BRUTALIST VARIANT 07
 
-## Getting Started
+**ID**: XERO-DEV-07  
+**CLASS**: ARCHIVAL  
+**STATUS**: DECLASSIFIED
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+This repository hosts the source code for the "Technical Brutalist" portfolio variant of [XERO]. It serves as a digital archive and showcase for developmental works, experimental neural networks, and system tools.
+
+## System Architecture
+
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: CSS Modules / Technical Brutalist Aesthetic
+- **Runtime**: Node.js
+
+## Features
+
+- **Brutalist UI**: High contrast, raw structural elements, and monospaced typography.
+- **Dynamic Projects**: Interactive `FolderCard` components showcasing GitHub repositories.
+- **Atmospheric Effects**: Typewriter text animations and CSS-based visual artifacts.
+
+## Deployment Protocols
+
+1. **Clone Sequence**:
+
+   ```bash
+   git clone git@github.com:lxrdxe7o/xero.dev.git
+   cd blog-x
+   ```
+
+2. **Dependency Injection**:
+
+   ```bash
+   npm install
+   # or
+   pnpm install
+   ```
+
+3. **Local Simulation**:
+   ```bash
+   npm run dev
+   ```
+   Access portal at `http://localhost:3000`.
+
+## Directory Structure
+
+```
+/src
+├── app/             # Application routes and layouts
+├── components/      # UI components (FolderCard, TabNavigation, etc.)
+└── lib/             # Utility functions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+_End of File // XERO.DEV_
