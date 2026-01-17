@@ -1,0 +1,94 @@
+.tabNav {
+  display: flex;
+  height: 50px;
+  background: #000;
+  padding-left: 0;
+  align-items: flex-end;
+  position: relative;
+  z-index: 10;
+  border-bottom: 2px solid var(--sidebar-border);
+}
+
+@keyframes tabSlideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.tabItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 var(--space-xl) 0 var(--space-md);
+  margin-right: 4px; /* Reduced gap since no slant */
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ink-dim);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  z-index: 1;
+  isolation: isolate;
+  min-width: 180px;
+  transform-origin: bottom center;
+  animation: tabSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  
+  /* Define local color var for the shape */
+  --tab-bg: #cbbba0;
+}
+
+/* Stagger delays */
+.tabItem:nth-child(1) { animation-delay: 0.1s; }
+.tabItem:nth-child(2) { animation-delay: 0.2s; }
+.tabItem:nth-child(3) { animation-delay: 0.3s; }
+.tabItem:nth-child(4) { animation-delay: 0.4s; }
+
+.tabBg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--tab-bg);
+  border-radius: 12px 12px 0 0; /* Rounded top corners */
+  transition: background-color 0.2s ease;
+}
+
+.tabItem:hover {
+  z-index: 5;
+  color: var(--ink);
+  --tab-bg: #dccdb3;
+}
+
+.tabItem.active {
+  z-index: 20;
+  height: 46px;
+  margin-bottom: -2px;
+  color: var(--ink);
+  --tab-bg: var(--paper);
+}
+
+/* Ensure content sits nicely */
+.tabContent {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.tabId {
+  font-size: 0.7rem;
+  opacity: 0.6;
+}
+
+.tabFiller {
+  flex: 1;
+  height: 100%;
+  background: #000;
+}
