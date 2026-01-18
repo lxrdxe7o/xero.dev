@@ -20,6 +20,17 @@
   }
 }
 
+@keyframes tabSlideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 .tabItem {
   position: relative;
   display: flex;
@@ -91,4 +102,169 @@
   flex: 1;
   height: 100%;
   background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: var(--space-md);
 }
+
+/* Theme Toggle Button */
+.themeToggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--ink-dim);
+  background: transparent;
+  color: var(--paper);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.themeToggle:hover {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--paper);
+  transform: scale(1.1);
+}
+
+/* Dark Mode Overrides */
+[data-theme="dark"] .tabNav {
+  background: #1e1a16;
+}
+
+[data-theme="dark"] .tabItem {
+  --tab-bg: #2a2520;
+}
+
+[data-theme="dark"] .tabItem:hover {
+  --tab-bg: #3a332a;
+}
+
+[data-theme="dark"] .tabItem.active {
+  --tab-bg: var(--paper);
+}
+
+[data-theme="dark"] .tabFiller {
+  background: #1e1a16;
+}
+
+/* Mobile: Vertical Navigation on Left */
+@media (max-width: 768px) {
+  .tabNav {
+    position: fixed;
+    left: 0;
+    top: 50px; /* Below the collapsible stats header */
+    bottom: 0;
+    width: 46px; /* Decrease width from 60px */
+    height: auto;
+    background: #000; /* Black background for light mode */
+    flex-direction: column;
+    align-items: flex-start; /* Ensure items align to left/center as needed (since width is fixed) */
+    justify-content: flex-start;
+    padding: 0; /* Remove padding to eliminate gaps */
+    border-bottom: none;
+    border-right: 2px solid var(--sidebar-border);
+    z-index: 50;
+    overflow-y: auto;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+  }
+
+  .tabItem {
+    width: 100%;
+    min-width: unset;
+    height: 120px; /* Fixed height for consistent size */
+    padding: 0; /* Remove vertical padding since we have fixed height */
+    margin-right: 0;
+    margin-bottom: 4px; /* Explicitly match desktop gap of 4px */
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    transform-origin: center; /* Fix alignment offset from desktop's bottom-center origin */
+    animation: none; /* Disabled to prevent replay on navigation */
+    color: var(--ink-dim);
+    justify-content: center;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    border: none; /* Override global a hover styles */
+  }
+
+  .tabItem:hover {
+    border: none; /* Override global a:hover border-bottom */
+  }
+
+  @keyframes tabPop {
+    0% { transform: rotate(180deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.05); }
+    100% { transform: rotate(180deg) scale(1); }
+  }
+
+  /* Adjust active state for vertical */
+  .tabItem.active {
+    height: 120px; /* Match standard fixed height */
+    width: calc(100% + 2px);
+    margin-right: -2px;
+    margin-bottom: 4px;
+    background: transparent; /* Let tabBg handle the background */
+    color: var(--ink);
+    border-right: none; /* Remove the simple border */
+    --tab-bg: var(--paper); /* Restore active bg color var */
+    animation: tabPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; /* Pop animation */
+  }
+
+  /* Restore and adapt the desktop tab shape for mobile */
+  .tabBg {
+    display: block; /* Show visual shape again */
+    border-radius: 0 12px 12px 0; /* Rounded on right side */
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+  }
+
+  .tabContent {
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    padding-top: var(--space-sm);
+    padding-bottom: var(--space-sm);
+  }
+
+  /* Show ID again if space permits, or keep it vertical */
+  .tabId {
+    display: none; /* Hide ID on mobile as requested */
+  }
+
+  .tabLabel {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  .tabFiller {
+    display: none;
+  }
+
+  .themeToggle {
+    position: fixed;
+    bottom: var(--space-md);
+    left: 7px;
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+    z-index: 51;
+    border-color: var(--paper);
+    color: var(--paper);
+  }
+
+  /* Dark mode specific for mobile nav */
+  [data-theme="dark"] .tabNav {
+    background: var(--sidebar-bg); /* Use theme sidebar bg */
+    border-right-color: var(--sidebar-border);
+  }
+
+  [data-theme="dark"] .themeToggle {
+    border-color: #f5c842;
+    color: #f5c842;
+  }
+}
+

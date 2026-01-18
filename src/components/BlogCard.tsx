@@ -48,7 +48,7 @@ export default function BlogCard({ post, animationType = 'pop-in', index = 0 }: 
     >
       <div className={styles.layout}>
         {coverImage && (
-          <Link href={`/blog/${slug}`} className={styles.imageWrapper}>
+          <Link href={`/lab/${slug}`} className={styles.imageWrapper}>
             <div className={styles.imageContainer}>
               <img 
                 src={coverImage} 
@@ -67,7 +67,7 @@ export default function BlogCard({ post, animationType = 'pop-in', index = 0 }: 
             </span>
           </div>
 
-          <Link href={`/blog/${slug}`}>
+          <Link href={`/lab/${slug}`}>
             <h3 className={styles.title}>{title}</h3>
           </Link>
 
@@ -75,7 +75,7 @@ export default function BlogCard({ post, animationType = 'pop-in', index = 0 }: 
 
           <div className={styles.footer}>
             <span className={styles.date}>{formattedDate}</span>
-            <Link href={`/blog/${slug}`} className={styles.readMore}>
+            <Link href={`/lab/${slug}`} className={styles.readMore}>
               <span className="material-icons">arrow_forward</span>
             </Link>
           </div>

@@ -75,8 +75,9 @@
 
 .socials {
   display: flex;
-  gap: var(--space-md);
-  margin-top: var(--space-xl);
+  gap: var(--space-lg);
+  margin-top: var(--space-2xl);
+  padding-bottom: var(--space-xl);
 }
 
 .socialLink {

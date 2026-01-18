@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -15,6 +15,20 @@ import styles from './TabNavigation.module.css';
 
 export default function TabNavigation() {
   const pathname = usePathname();
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+  useEffect(() => {
+    const savedTheme = (localStorage.getItem('theme') as 'light' | 'dark') || 'light';
+    setTheme(savedTheme);
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+  };
 
   return (
     <nav className={`${styles.tabNav} hide-mobile`}>
@@ -37,6 +51,13 @@ export default function TabNavigation() {
         );
       })}
       <div className={styles.tabFiller}></div>
+      <button 
+        className={styles.themeToggle}
+        onClick={toggleTheme}
+        aria-label="Toggle theme"
+      >
+        {theme === 'dark' ? '☀' : '☾'}
+      </button>
     </nav>
   );
 }
