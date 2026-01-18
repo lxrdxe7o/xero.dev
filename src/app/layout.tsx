@@ -1,4 +1,5 @@
 import { Space_Mono, Old_Standard_TT, Courier_Prime } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import Sidebar from '@/components/Sidebar';
 import TabNavigation from '@/components/TabNavigation';
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </div>
         </div>
+        <Analytics />
       </body>
     </html>
   );
