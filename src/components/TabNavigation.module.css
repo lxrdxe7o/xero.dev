@@ -241,17 +241,20 @@
   }
 
   .tabFiller {
-    display: none;
+    flex: none;
+    width: 100%;
+    height: auto;
+    background: transparent;
+    padding: 0;
+    justify-content: center;
+    margin-top: auto;
+    padding-bottom: var(--space-md);
   }
 
   .themeToggle {
-    position: fixed;
-    bottom: var(--space-md);
-    left: 7px;
     width: 28px;
     height: 28px;
     font-size: 0.9rem;
-    z-index: 51;
     border-color: var(--paper);
     color: var(--paper);
   }

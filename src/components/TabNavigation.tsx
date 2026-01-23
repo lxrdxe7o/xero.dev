@@ -50,14 +50,15 @@ export default function TabNavigation() {
           </Link>
         );
       })}
-      <div className={styles.tabFiller}></div>
-      <button 
-        className={styles.themeToggle}
-        onClick={toggleTheme}
-        aria-label="Toggle theme"
-      >
-        {theme === 'dark' ? '☀' : '☾'}
-      </button>
+      <div className={styles.tabFiller}>
+        <button
+          className={styles.themeToggle}
+          onClick={toggleTheme}
+          aria-label="Toggle theme"
+        >
+          {theme === 'dark' ? '☀' : '☾'}
+        </button>
+      </div>
     </nav>
   );
 }
