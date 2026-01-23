@@ -113,9 +113,9 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 2px solid var(--ink-dim);
+  border: 2px solid #f5c842;
   background: transparent;
-  color: var(--paper);
+  color: #f5c842;
   font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.2s ease;
