@@ -1,28 +1,69 @@
-'use client';
-
-import React from 'react';
-import FolderCard from '@/components/FolderCard';
-import TextScramble from '@/components/effects/TextScramble';
-import StaggeredGrid from '@/components/effects/StaggeredGrid';
-import SectionDivider from '@/components/effects/SectionDivider';
-import DocumentReel from '@/components/sections/DocumentReel';
+"use client";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import React from "react";
+import FolderCard from "@/components/FolderCard";
+import TextScramble from "@/components/effects/TextScramble";
+import StaggeredGrid from "@/components/effects/StaggeredGrid";
+import SectionDivider from "@/components/effects/SectionDivider";
+import DocumentReel from "@/components/sections/DocumentReel";
 
 export default function Home() {
   const projects = [
-    { name: 'dotfiles', description: 'System configuration files for Neovim, Tmux, Zsh. Maintained for efficiency and aesthetics.', link: 'https://github.com/lxrdxe7o/dotfiles' },
-    { name: 'xero-shell', description: 'Custom shell environment with advanced autocompletion and theming.', link: 'https://github.com/lxrdxe7o/xero-shell' },
-    { name: 'DeadDrop', description: 'Secure, ephemeral file sharing service with end-to-end encryption.', link: 'https://github.com/lxrdxe7o/DeadDrop' },
-    { name: 'hachi', description: 'Experimental neural network project focusing on pattern recognition.', link: 'https://github.com/lxrdxe7o/hachi' },
-    { name: 'KrakenVim', description: 'Performance-oriented Neovim distribution. Lua-based configuration.', link: 'https://github.com/lxrdxe7o/KrakenVim' },
-    { name: 'shiro-nekoo-115', description: 'Frontend design system exploration. White cat theme.', link: 'https://github.com/lxrdxe7o/shiro-nekoo-115' },
-    { name: 'tora-neko-311', description: 'Backend microservices architecture prototype. Tiger cat theme.', link: 'https://github.com/lxrdxe7o/tora-neko-311' },
-    { name: 'mikeneko', description: 'Full-stack application boilerplate. Calico cat theme.', link: 'https://github.com/lxrdxe7o/mikeneko' },
-    { name: 'kuro-nekoo-215', description: 'Security audit tools and scripts. Black cat theme.', link: 'https://github.com/lxrdxe7o/kuro-nekoo-215' },
+    {
+      name: "dotfiles",
+      description:
+        "System configuration files for Neovim, Tmux, Zsh. Maintained for efficiency and aesthetics.",
+      link: "https://github.com/lxrdxe7o/dotfiles",
+    },
+    {
+      name: "xero-shell",
+      description:
+        "Custom shell environment with advanced autocompletion and theming.",
+      link: "https://github.com/lxrdxe7o/xero-shell",
+    },
+    {
+      name: "DeadDrop",
+      description:
+        "Secure, ephemeral file sharing service with end-to-end encryption.",
+      link: "https://github.com/lxrdxe7o/DeadDrop",
+    },
+    {
+      name: "hachi",
+      description:
+        "Experimental neural network project focusing on pattern recognition.",
+      link: "https://github.com/lxrdxe7o/hachi",
+    },
+    {
+      name: "KrakenVim",
+      description:
+        "Performance-oriented Neovim distribution. Lua-based configuration.",
+      link: "https://github.com/lxrdxe7o/KrakenVim",
+    },
+    {
+      name: "shiro-nekoo-115",
+      description: "Frontend design system exploration. White cat theme.",
+      link: "https://github.com/lxrdxe7o/shiro-nekoo-115",
+    },
+    {
+      name: "tora-neko-311",
+      description:
+        "Backend microservices architecture prototype. Tiger cat theme.",
+      link: "https://github.com/lxrdxe7o/tora-neko-311",
+    },
+    {
+      name: "mikeneko",
+      description: "Full-stack application boilerplate. Calico cat theme.",
+      link: "https://github.com/lxrdxe7o/mikeneko",
+    },
+    {
+      name: "kuro-nekoo-215",
+      description: "Security audit tools and scripts. Black cat theme.",
+      link: "https://github.com/lxrdxe7o/kuro-nekoo-215",
+    },
   ];
 
   return (
     <div className="page-container">
-
       {/* Header Section */}
       <section className="page-header">
         <div className="header-meta font-mono text-sm">
@@ -59,11 +100,7 @@ export default function Home() {
       {/* Projects Grid */}
       <StaggeredGrid className="projects-grid" staggerDelay={0.08}>
         {projects.map((project, index) => (
-          <FolderCard
-            key={project.name}
-            index={index}
-            {...project}
-          />
+          <FolderCard key={project.name} index={index} {...project} />
         ))}
       </StaggeredGrid>
 
