@@ -1,25 +1,32 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { useEffect, useState, useRef } from 'react';
 import styles from './CustomCursor.module.css';
 
 export default function CustomCursor() {
   const [isTouch, setIsTouch] = useState(true);
   const [hoverType, setHoverType] = useState<'default' | 'link' | 'card'>('default');
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
-  const springX = useSpring(cursorX, { stiffness: 500, damping: 28 });
-  const springY = useSpring(cursorY, { stiffness: 500, damping: 28 });
+  const cursorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
     setIsTouch(isTouchDevice);
     if (isTouchDevice) return;
 
+    let animationFrameId: number;
+    let mouseX = -100;
+    let mouseY = -100;
+
+    const updateCursor = () => {
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+      }
+      animationFrameId = requestAnimationFrame(updateCursor);
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -37,27 +44,27 @@ export default function CustomCursor() {
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('mouseover', handleMouseOver, { passive: true });
+    animationFrameId = requestAnimationFrame(updateCursor);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseover', handleMouseOver);
+      cancelAnimationFrame(animationFrameId);
     };
-  }, [cursorX, cursorY]);
+  }, []);
 
   if (isTouch) return null;
 
   return (
-    <motion.div
+    <div
+      ref={cursorRef}
       className={`${styles.cursor} ${styles[hoverType]}`}
-      style={{
-        x: springX,
-        y: springY,
-      }}
+      style={{ willChange: 'transform' }}
     >
       <div className={styles.crosshairH} />
       <div className={styles.crosshairV} />
       <div className={styles.dot} />
       {hoverType === 'card' && <span className={styles.label}>VIEW</span>}
-    </motion.div>
+    </div>
   );
 }
