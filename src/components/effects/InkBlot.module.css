@@ -1,0 +1,44 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.container svg {
+  position: absolute;
+  color: var(--ink);
+  opacity: 0.03;
+  mix-blend-mode: multiply;
+}
+
+[data-theme="dark"] .container svg {
+  color: var(--ink);
+  opacity: 0.04;
+  mix-blend-mode: normal;
+}
+
+.blob1 {
+  width: 400px;
+  height: 400px;
+  top: -100px;
+  right: -50px;
+}
+
+.blob2 {
+  width: 300px;
+  height: 300px;
+  bottom: -80px;
+  left: -40px;
+}
+
+.blob3 {
+  width: 250px;
+  height: 250px;
+  top: 40%;
+  right: 20%;
+}

@@ -2,7 +2,10 @@
 
 import React from 'react';
 import FolderCard from '@/components/FolderCard';
-import Typewriter from '@/components/Typewriter';
+import TextScramble from '@/components/effects/TextScramble';
+import StaggeredGrid from '@/components/effects/StaggeredGrid';
+import SectionDivider from '@/components/effects/SectionDivider';
+import DocumentReel from '@/components/sections/DocumentReel';
 
 export default function Home() {
   const projects = [
@@ -19,35 +22,50 @@ export default function Home() {
 
   return (
     <div className="page-container">
-      
+
       {/* Header Section */}
-      <section className="page-header section-animate visible">
+      <section className="page-header">
         <div className="header-meta font-mono text-sm">
-           <span>REF: XERO-DEV-07</span>
-           <span>Class: ARCHIVAL</span>
+          <span>REF: XERO-DEV-07</span>
+          <span>Class: ARCHIVAL</span>
         </div>
-        <h1 className="main-title">ARCHIVAL TECHNICAL BRUTALIST VARIANT 07</h1>
+        <h1 className="main-title">
+          <TextScramble
+            text="ARCHIVAL TECHNICAL BRUTALIST VARIANT 07"
+            trigger="mount"
+            speed={25}
+            delay={300}
+          />
+        </h1>
         <div className="header-desc font-mono">
-           <p>
-             <Typewriter 
-               text="The following index relates to the developmental works and experimental projects of [XERO]. All files have been declassified for public viewing."
-               speed={30}
-               delay={500}
-             />
-           </p>
+          <p>
+            <TextScramble
+              text="The following index relates to the developmental works and experimental projects of [XERO]. All files have been declassified for public viewing."
+              trigger="mount"
+              speed={15}
+              delay={1200}
+            />
+          </p>
         </div>
       </section>
 
+      <SectionDivider variant="stamp" label="DECLASSIFIED" />
+
+      {/* Document Reel - Evidence Board */}
+      <DocumentReel />
+
+      <SectionDivider variant="line" />
+
       {/* Projects Grid */}
-      <section className="projects-grid">
-         {projects.map((project, index) => (
-            <FolderCard 
-               key={project.name}
-               index={index}
-               {...project}
-            />
-         ))}
-      </section>
+      <StaggeredGrid className="projects-grid" staggerDelay={0.08}>
+        {projects.map((project, index) => (
+          <FolderCard
+            key={project.name}
+            index={index}
+            {...project}
+          />
+        ))}
+      </StaggeredGrid>
 
       <style jsx>{`
         .page-container {
@@ -55,8 +73,8 @@ export default function Home() {
           margin: 0 auto;
           display: flex;
           flex-direction: column;
-          gap: var(--space-3xl);
-          padding-bottom: var(--space-4xl);
+          gap: var(--space-2xl);
+          padding-bottom: var(--space-3xl);
         }
 
         .page-header {
@@ -89,21 +107,9 @@ export default function Home() {
           opacity: 0.8;
         }
 
-        .projects-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-          gap: var(--space-2xl);
-          perspective: 1000px;
-        }
-
         @media (max-width: 768px) {
           .main-title {
             font-size: 2rem;
-          }
-          
-          .projects-grid {
-            grid-template-columns: 1fr;
-            padding: 0 var(--space-md);
           }
         }
       `}</style>

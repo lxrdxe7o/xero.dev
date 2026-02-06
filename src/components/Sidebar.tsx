@@ -1,15 +1,36 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useInView, animate } from 'framer-motion';
+
+function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: string }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const [display, setDisplay] = useState('0');
+
+  useEffect(() => {
+    if (!isInView) return;
+    const controls = animate(0, target, {
+      duration: 1.5,
+      ease: 'easeOut',
+      onUpdate: (value) => {
+        setDisplay(Math.floor(value).toString());
+      },
+    });
+    return () => controls.stop();
+  }, [isInView, target]);
+
+  return <span ref={ref}>{display}{suffix}</span>;
+}
 
 export default function Sidebar() {
   const [time, setTime] = useState<string>('');
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  
+
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      setTime(now.toLocaleTimeString('en-US', { 
+      setTime(now.toLocaleTimeString('en-US', {
         timeZone: 'Asia/Dhaka',
         hour12: false,
         hour: '2-digit',
@@ -17,7 +38,7 @@ export default function Sidebar() {
         second: '2-digit'
       }) + ' BST');
     };
-    
+
     updateTime();
     const interval = setInterval(updateTime, 1000);
     return () => clearInterval(interval);
@@ -45,6 +66,11 @@ export default function Sidebar() {
       </div>
 
       <div className="stat-group">
+        <label>PROJECTS:</label>
+        <div className="value"><AnimatedCounter target={9} /></div>
+      </div>
+
+      <div className="stat-group">
         <label>TECH STACK:</label>
         <ul className="value-list">
           <li>TYPE SCRIPT</li>
@@ -63,30 +89,37 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Desktop Sidebar - Hidden on mobile */}
+      {/* Desktop Sidebar */}
       <aside className="sidebar">
         <div className="sidebar-header">
-          <h2 className="glitch-text">TECHNICAL STATS</h2>
+          <motion.h2
+            className="glitch-text"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            TECHNICAL STATS
+          </motion.h2>
         </div>
-        
+
         <div className="sidebar-content font-mono text-sm">
           {statsContent}
         </div>
       </aside>
 
-      {/* Mobile Collapsible - Shows only on mobile */}
+      {/* Mobile Collapsible */}
       <div className="mobile-stats-wrapper">
-        <button 
+        <button
           className="sidebar-mobile-toggle"
           onClick={toggleExpanded}
           aria-expanded={isExpanded}
           aria-controls="mobile-stats-content"
         >
           <span className="toggle-label">TECHNICAL STATS</span>
-          <span className={`toggle-icon ${isExpanded ? 'expanded' : ''}`}>▼</span>
+          <span className={`toggle-icon ${isExpanded ? 'expanded' : ''}`}>&#x25BC;</span>
         </button>
 
-        <div 
+        <div
           id="mobile-stats-content"
           className={`sidebar-mobile-content ${isExpanded ? 'expanded' : ''}`}
         >
@@ -97,7 +130,6 @@ export default function Sidebar() {
       </div>
 
       <style jsx>{`
-        /* Desktop Sidebar */
         .sidebar {
           width: var(--sidebar-width);
           background: var(--sidebar-bg);
@@ -148,7 +180,7 @@ export default function Sidebar() {
         }
 
         .value-list li::before {
-          content: '• ';
+          content: '\u2022 ';
           opacity: 0.5;
           margin-right: 0.5rem;
         }
@@ -156,12 +188,11 @@ export default function Sidebar() {
         .status-stable {
           color: var(--accent-blue);
         }
-        
+
         .status-stable::before {
-          content: '● ';
+          content: '\u25CF ';
         }
 
-        /* Mobile Stats Wrapper - Hidden on desktop */
         .mobile-stats-wrapper {
           display: none;
           position: fixed;
@@ -173,7 +204,6 @@ export default function Sidebar() {
           z-index: 100;
         }
 
-        /* Mobile Toggle Button */
         .sidebar-mobile-toggle {
           display: flex;
           width: 100%;
@@ -207,7 +237,6 @@ export default function Sidebar() {
           transform: rotate(180deg);
         }
 
-        /* Mobile Content */
         .sidebar-mobile-content {
           max-height: 0;
           overflow: hidden;

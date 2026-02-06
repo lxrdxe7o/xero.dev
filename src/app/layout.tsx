@@ -4,6 +4,10 @@ import './globals.css';
 import Sidebar from '@/components/Sidebar';
 import TabNavigation from '@/components/TabNavigation';
 import BackgroundGears from '@/components/BackgroundGears';
+import AnimationProvider from '@/components/providers/AnimationProvider';
+import ScrollProgressBar from '@/components/effects/ScrollProgressBar';
+import CustomCursor from '@/components/effects/CustomCursor';
+import InkBlot from '@/components/effects/InkBlot';
 
 const spaceMono = Space_Mono({
   weight: ['400', '700'],
@@ -34,24 +38,28 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body 
+      <body
         className={`${spaceMono.variable} ${oldStandard.variable} ${courierPrime.variable}`}
         suppressHydrationWarning
       >
-        <div className="layout-container">
-          <Sidebar />
-          <div className="main-content">
-            <TabNavigation />
-            <div className="scroll-area">
-              <BackgroundGears />
-              <div className="texture-overlay"></div>
-              <main>{children}</main>
+        <AnimationProvider>
+          <CustomCursor />
+          <ScrollProgressBar />
+          <div className="layout-container">
+            <Sidebar />
+            <div className="main-content">
+              <TabNavigation />
+              <div className="scroll-area">
+                <BackgroundGears />
+                <InkBlot />
+                <div className="texture-overlay"></div>
+                <main>{children}</main>
+              </div>
             </div>
           </div>
-        </div>
+        </AnimationProvider>
         <Analytics />
       </body>
     </html>
   );
 }
-

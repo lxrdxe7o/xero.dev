@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { motion } from 'framer-motion';
+import { useMagnetic } from '@/hooks/useMagnetic';
 
 const TABS = [
   { id: '01', label: 'PROJECTS', path: '/' },
@@ -12,6 +14,36 @@ const TABS = [
 ];
 
 import styles from './TabNavigation.module.css';
+
+function MagneticTab({ tab, isActive }: { tab: typeof TABS[0]; isActive: boolean }) {
+  const magnetic = useMagnetic(0.25);
+
+  return (
+    <motion.div
+      ref={magnetic.ref as React.RefObject<HTMLDivElement>}
+      style={magnetic.style}
+      initial={{ y: 40, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{
+        delay: Number(tab.id) * 0.1,
+        duration: 0.5,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      {...magnetic.handlers}
+    >
+      <Link
+        href={tab.path}
+        className={`${styles.tabItem} ${isActive ? styles.active : ''}`}
+      >
+        <div className={styles.tabBg}></div>
+        <span className={styles.tabContent}>
+          <span className={styles.tabId}>FILE NO. {tab.id} //</span>
+          <span className={styles.tabLabel}>{tab.label}</span>
+        </span>
+      </Link>
+    </motion.div>
+  );
+}
 
 export default function TabNavigation() {
   const pathname = usePathname();
@@ -34,30 +66,18 @@ export default function TabNavigation() {
     <nav className={`${styles.tabNav} hide-mobile`}>
       {TABS.map((tab) => {
         const isActive = pathname === tab.path;
-        return (
-          <Link 
-            key={tab.id} 
-            href={tab.path}
-            className={`${styles.tabItem} ${isActive ? styles.active : ''}`}
-          >
-            {/* CSS Shape Background */}
-            <div className={styles.tabBg}></div>
-
-            <span className={styles.tabContent}>
-              <span className={styles.tabId}>FILE NO. {tab.id} //</span> 
-              <span className={styles.tabLabel}>{tab.label}</span>
-            </span>
-          </Link>
-        );
+        return <MagneticTab key={tab.id} tab={tab} isActive={isActive} />;
       })}
       <div className={styles.tabFiller}>
-        <button
+        <motion.button
           className={styles.themeToggle}
           onClick={toggleTheme}
           aria-label="Toggle theme"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95, rotate: 15 }}
         >
-          {theme === 'dark' ? '☀' : '☾'}
-        </button>
+          {theme === 'dark' ? '\u2600' : '\u263E'}
+        </motion.button>
       </div>
     </nav>
   );

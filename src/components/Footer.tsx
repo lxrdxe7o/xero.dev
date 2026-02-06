@@ -1,41 +1,56 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import Link from 'next/link';
+import { motion, useInView } from 'framer-motion';
+import TextScramble from './effects/TextScramble';
+import { useMagnetic } from '@/hooks/useMagnetic';
 import styles from './Footer.module.css';
+
+function MagneticButton({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) {
+  const magnetic = useMagnetic(0.3);
+  return (
+    <motion.a
+      ref={magnetic.ref as React.RefObject<HTMLAnchorElement>}
+      href={href}
+      className={className}
+      style={magnetic.style}
+      {...magnetic.handlers}
+    >
+      {children}
+    </motion.a>
+  );
+}
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const footerRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    if (footerRef.current) observer.observe(footerRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const isInView = useInView(footerRef, { once: true, amount: 0.1 });
 
   return (
-    <footer className={`${styles.footer} slide-up-bounce`} ref={footerRef}>
+    <footer className={styles.footer} ref={footerRef}>
       <div className={styles.container}>
-        <div className={styles.top}>
+        <motion.div
+          className={styles.top}
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
           <div className={styles.cta}>
-            <h2 className={styles.ctaTitle}>Something Together?</h2>
-            <a href="mailto:hello@xero.dev" className={styles.emailBtn}>
+            <h2 className={styles.ctaTitle}>
+              <TextScramble text="Something Together?" trigger="inView" speed={30} />
+            </h2>
+            <MagneticButton href="mailto:hello@xero.dev" className={styles.emailBtn}>
               Email Me
-            </a>
+            </MagneticButton>
           </div>
 
-          <div className={styles.links}>
+          <motion.div
+            className={styles.links}
+            initial={{ opacity: 0, x: 30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
             <div className={styles.linkGroup}>
               <h5 className={styles.linkTitle}>Socials</h5>
               <ul className={styles.linkList}>
@@ -70,17 +85,22 @@ export default function Footer() {
                 <li><Link href="/impressum">Impressum</Link></li>
               </ul>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <div className={styles.bottom}>
+        <motion.div
+          className={styles.bottom}
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
           <p className={styles.copyright}>
-            © {currentYear} The Creative Journal. All rights reserved.
+            &copy; {currentYear} The Creative Journal. All rights reserved.
           </p>
           <p className={styles.locations}>
             Dhaka, BD
           </p>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );

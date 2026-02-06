@@ -1,20 +1,17 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import styles from './BlogCard.module.css';
-
 import { BlogPost } from '@/lib/blogData';
 
 interface BlogCardProps {
   post: BlogPost & { coverImage?: string };
-  animationType?: string;
   index?: number;
 }
 
-export default function BlogCard({ post, animationType = 'pop-in', index = 0 }: BlogCardProps) {
-  const { slug, title, excerpt, date, tags, coverImage, readingTime } = post;
-  const cardRef = useRef(null);
+export default function BlogCard({ post, index = 0 }: BlogCardProps) {
+  const { slug, title, excerpt, date, tags, coverImage } = post;
 
   const formattedDate = new Date(date).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -22,43 +19,32 @@ export default function BlogCard({ post, animationType = 'pop-in', index = 0 }: 
     day: 'numeric'
   });
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Add delay based on index for staggered effect
-            setTimeout(() => {
-              entry.target.classList.add('visible');
-            }, index * 150);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    if (cardRef.current) observer.observe(cardRef.current);
-    return () => observer.disconnect();
-  }, [index]);
-
   return (
-    <article 
-      className={`${styles.card} ${animationType}`} 
-      ref={cardRef}
+    <motion.article
+      className={styles.card}
+      initial={{ opacity: 0, y: 30, scale: 0.97 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{
+        duration: 0.5,
+        delay: index * 0.1,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      }}
+      whileHover={{ y: -4 }}
     >
       <div className={styles.layout}>
         {coverImage && (
           <Link href={`/lab/${slug}`} className={styles.imageWrapper}>
             <div className={styles.imageContainer}>
-              <img 
-                src={coverImage} 
+              <img
+                src={coverImage}
                 alt={title}
                 className={styles.image}
               />
             </div>
           </Link>
         )}
-        
+
         <div className={styles.content}>
           <div className={styles.meta}>
             <span className={styles.categoryDot}></span>
@@ -81,6 +67,13 @@ export default function BlogCard({ post, animationType = 'pop-in', index = 0 }: 
           </div>
         </div>
       </div>
-    </article>
+
+      <motion.div
+        className={styles.scanline}
+        initial={{ x: '-100%' }}
+        whileHover={{ x: '200%' }}
+        transition={{ duration: 0.6, ease: 'easeInOut' }}
+      />
+    </motion.article>
   );
 }

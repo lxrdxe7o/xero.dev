@@ -1,0 +1,93 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  width: 40px;
+  height: 40px;
+  margin-left: -20px;
+  margin-top: -20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mix-blend-mode: difference;
+  transition: width 0.3s ease, height 0.3s ease, margin 0.3s ease, border-radius 0.3s ease;
+}
+
+.crosshairH,
+.crosshairV {
+  position: absolute;
+  background: white;
+  transition: opacity 0.2s ease;
+}
+
+.crosshairH {
+  width: 20px;
+  height: 1px;
+}
+
+.crosshairV {
+  width: 1px;
+  height: 20px;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+  transition: transform 0.3s ease;
+}
+
+/* Link hover state */
+.link {
+  width: 60px;
+  height: 60px;
+  margin-left: -30px;
+  margin-top: -30px;
+}
+
+.link .crosshairH,
+.link .crosshairV {
+  opacity: 0;
+}
+
+.link .dot {
+  transform: scale(12);
+  opacity: 0.5;
+}
+
+/* Card hover state */
+.card {
+  width: 80px;
+  height: 80px;
+  margin-left: -40px;
+  margin-top: -40px;
+  border: 1px solid white;
+  border-radius: 50%;
+}
+
+.card .crosshairH,
+.card .crosshairV {
+  opacity: 0;
+}
+
+.card .dot {
+  opacity: 0;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  color: white;
+  text-transform: uppercase;
+}
+
+@media (pointer: coarse) {
+  .cursor {
+    display: none;
+  }
+}
