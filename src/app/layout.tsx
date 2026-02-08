@@ -52,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div className="scroll-area">
                 <BackgroundGears />
                 <InkBlot />
-                <div className="texture-overlay"></div>
+
                 <main>{children}</main>
               </div>
             </div>
