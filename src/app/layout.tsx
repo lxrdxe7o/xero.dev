@@ -7,7 +7,6 @@ import BackgroundGears from '@/components/BackgroundGears';
 import SmoothScroll from '@/components/SmoothScroll';
 import ScrollProgressBar from '@/components/effects/ScrollProgressBar';
 import CustomCursor from '@/components/effects/CustomCursor';
-import InkBlot from '@/components/effects/InkBlot';
 
 const spaceMono = Space_Mono({
   weight: ['400', '700'],
@@ -45,14 +44,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SmoothScroll>
           <CustomCursor />
           <ScrollProgressBar />
+          <BackgroundGears />
           <div className="layout-container">
             <Sidebar />
             <div className="main-content">
               <TabNavigation />
               <div className="scroll-area">
-                <BackgroundGears />
-                <InkBlot />
-
                 <main>{children}</main>
               </div>
             </div>

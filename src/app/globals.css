@@ -41,6 +41,7 @@
   --space-xl: 2rem;
   --space-2xl: 3rem;
   --space-3xl: 4rem;
+  --space-4xl: 6rem;
 
   /* Layout */
   --max-width: 1600px;
@@ -254,6 +255,8 @@ a:hover {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  position: relative;
+  z-index: 2;
 }
 
 .main-content {
@@ -270,6 +273,8 @@ a:hover {
   overflow-x: hidden;
   padding: var(--space-xl);
   perspective: 1000px;
+  position: relative;
+  /* ponytail: ScrollTrigger needs a non-static scroller to compute offsets; fixed for BackgroundGears scroll-driven rotation */
 }
 
 @media (max-width: 768px) {

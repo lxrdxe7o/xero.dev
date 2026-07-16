@@ -1,0 +1,96 @@
+.container {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.pairContainer {
+  position: absolute;
+  aspect-ratio: 1;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.pair1 {
+  width: min(70vw, 250px);
+  left: 50%;
+  top: 15%;
+  transform: translate(-50%, -50%);
+}
+
+.pair2 {
+  width: min(60vw, 220px);
+  left: 50%;
+  top: 72%;
+  transform: translate(-50%, -50%);
+}
+
+@media (min-width: 768px) {
+  .pair1 {
+    width: clamp(280px, 30vw, 560px);
+    left: 82vw;
+    top: 16vh;
+  }
+
+  .pair2 {
+    width: clamp(200px, 25vw, 400px);
+    /* Clear the 320px sidebar — plain vw offsets left the pair hidden behind it */
+    left: calc(var(--sidebar-width) + 14vw);
+    top: 76vh;
+  }
+}
+
+.gearBase {
+  position: absolute;
+  aspect-ratio: 1;
+  will-change: transform;
+  pointer-events: none;
+  opacity: 0.15;
+  transition: opacity 0.4s ease;
+}
+
+.gear1 {
+  width: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.gear2 {
+  width: 63.636%;
+  left: calc(50% - 63.85%);
+  top: calc(50% + 14.37%);
+  transform: translate(-50%, -50%);
+}
+
+.gear3 {
+  width: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.gear4 {
+  width: 80%;
+  left: calc(50% + 69.52%);
+  top: calc(50% - 18.73%);
+  transform: translate(-50%, -50%);
+}
+
+.gearSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pairContainer {
+    will-change: auto;
+  }
+
+  .gearBase {
+    will-change: auto;
+  }
+}

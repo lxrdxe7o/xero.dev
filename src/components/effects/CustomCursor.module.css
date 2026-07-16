@@ -16,7 +16,13 @@
     width 0.3s ease,
     height 0.3s ease,
     margin 0.3s ease,
-    border-radius 0.3s ease;
+    border-radius 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.default {
+  /* ponytail: empty base style — explicit className instead of `undefined` */
 }
 
 .crosshairH,

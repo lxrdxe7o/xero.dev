@@ -28,6 +28,7 @@ export default function TextScramble({
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const rafRef = useRef<number>(0);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const scramble = useCallback(() => {
     let frame = 0;
@@ -64,18 +65,31 @@ export default function TextScramble({
   }, [text, speed]);
 
   useEffect(() => {
-    if (trigger === 'mount' && !hasTriggered) {
+    if (hasTriggered) return;
+    if (trigger === 'mount') {
       setHasTriggered(true);
       const timeout = setTimeout(scramble, delay);
-      return () => clearTimeout(timeout);
+      timeoutRef.current = timeout;
+      return;
     }
-    if (trigger === 'inView' && isInView && !hasTriggered) {
+    if (trigger === 'inView' && isInView) {
       setHasTriggered(true);
       const timeout = setTimeout(scramble, delay);
-      return () => clearTimeout(timeout);
+      timeoutRef.current = timeout;
+      return;
     }
-    return () => cancelAnimationFrame(rafRef.current);
-  }, [trigger, isInView, hasTriggered, scramble, delay]);
+    // Intentionally omit `isInView` and `hasTriggered` from deps — re-running
+    // this effect cancels pending scramble timeouts. The `hasTriggered` flag
+    // ensures we only schedule once.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [trigger, delay, scramble]);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     if (trigger === 'hover' && isHovering) {

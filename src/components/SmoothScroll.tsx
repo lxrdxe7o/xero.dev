@@ -20,14 +20,19 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       smoothWheel: true,
     });
     lenisRef.current = lenis;
+    // Expose Lenis instance for other components (e.g. BackgroundGears ScrollTrigger sync)
+    (scrollArea as any).__lenis = lenis;
 
-    function raf(time: number) {
+    let rafId = requestAnimationFrame(function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
+    });
 
-    return () => lenis.destroy();
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+      delete (scrollArea as any).__lenis;
+    };
   }, [reducedMotion]);
 
   return <>{children}</>;
