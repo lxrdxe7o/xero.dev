@@ -4,7 +4,7 @@ import './globals.css';
 import Sidebar from '@/components/Sidebar';
 import TabNavigation from '@/components/TabNavigation';
 import BackgroundGears from '@/components/BackgroundGears';
-import AnimationProvider from '@/components/providers/AnimationProvider';
+import SmoothScroll from '@/components/SmoothScroll';
 import ScrollProgressBar from '@/components/effects/ScrollProgressBar';
 import CustomCursor from '@/components/effects/CustomCursor';
 import InkBlot from '@/components/effects/InkBlot';
@@ -42,7 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         className={`${spaceMono.variable} ${oldStandard.variable} ${courierPrime.variable}`}
         suppressHydrationWarning
       >
-        <AnimationProvider>
+        <SmoothScroll>
           <CustomCursor />
           <ScrollProgressBar />
           <div className="layout-container">
@@ -57,7 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </div>
             </div>
           </div>
-        </AnimationProvider>
+        </SmoothScroll>
         <Analytics />
       </body>
     </html>

@@ -63,7 +63,7 @@ export default function TabNavigation() {
   };
 
   return (
-    <nav className={`${styles.tabNav} hide-mobile`}>
+    <nav className={styles.tabNav}>
       {TABS.map((tab) => {
         const isActive = pathname === tab.path;
         return <MagneticTab key={tab.id} tab={tab} isActive={isActive} />;

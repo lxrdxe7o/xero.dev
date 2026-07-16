@@ -5,7 +5,7 @@ import { useRef } from 'react';
 import styles from './SectionDivider.module.css';
 
 interface SectionDividerProps {
-  variant?: 'line' | 'stamp' | 'tape';
+  variant?: 'line' | 'stamp';
   label?: string;
 }
 
@@ -57,29 +57,10 @@ function StampDivider({ label = 'DECLASSIFIED' }: { label?: string }) {
   );
 }
 
-function TapeDivider() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
-
-  return (
-    <div ref={ref} className={styles.tapeWrapper}>
-      <motion.div
-        className={styles.tape}
-        initial={{ scaleX: 0, opacity: 0 }}
-        animate={isInView ? { scaleX: 1, opacity: 1 } : {}}
-        transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-      />
-    </div>
-  );
-}
 
 export default function SectionDivider({ variant = 'line', label }: SectionDividerProps) {
-  switch (variant) {
-    case 'stamp':
-      return <StampDivider label={label} />;
-    case 'tape':
-      return <TapeDivider />;
-    default:
-      return <LineDivider />;
+  if (variant === 'stamp') {
+    return <StampDivider label={label} />;
   }
+  return <LineDivider />;
 }

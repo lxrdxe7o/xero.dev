@@ -6,12 +6,12 @@ import styles from './BlogCard.module.css';
 import { BlogPost } from '@/lib/blogData';
 
 interface BlogCardProps {
-  post: BlogPost & { coverImage?: string };
+  post: BlogPost;
   index?: number;
 }
 
 export default function BlogCard({ post, index = 0 }: BlogCardProps) {
-  const { slug, title, excerpt, date, tags, coverImage } = post;
+  const { slug, title, excerpt, date, tags } = post;
 
   const formattedDate = new Date(date).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -33,18 +33,6 @@ export default function BlogCard({ post, index = 0 }: BlogCardProps) {
       whileHover={{ y: -4 }}
     >
       <div className={styles.layout}>
-        {coverImage && (
-          <Link href={`/lab/${slug}`} className={styles.imageWrapper}>
-            <div className={styles.imageContainer}>
-              <img
-                src={coverImage}
-                alt={title}
-                className={styles.image}
-              />
-            </div>
-          </Link>
-        )}
-
         <div className={styles.content}>
           <div className={styles.meta}>
             <span className={styles.categoryDot}></span>
@@ -62,7 +50,7 @@ export default function BlogCard({ post, index = 0 }: BlogCardProps) {
           <div className={styles.footer}>
             <span className={styles.date}>{formattedDate}</span>
             <Link href={`/lab/${slug}`} className={styles.readMore}>
-              <span className="material-icons">arrow_forward</span>
+              →
             </Link>
           </div>
         </div>

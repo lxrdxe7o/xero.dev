@@ -45,6 +45,16 @@
   /* Layout */
   --max-width: 1600px;
   --header-height: 60px;
+
+  /* Folder Component */
+  --folder-tab-bg: #e6dcc8;
+  --folder-tab-border: #c9bfa8;
+  --folder-tab-text: #1a1815;
+  --folder-body-bg: #e6dcc8;
+  --folder-body-border: #c9bfa8;
+  --folder-content-bg: #f5f2eb;
+  --folder-content-border: #eee;
+  --folder-ruled-line: rgba(0,0,0,0.05);
 }
 
 /* Dark Theme - Warm Archival */
@@ -59,6 +69,16 @@
   --accent-blue: #7799dd; /* Muted warm blue */
   --sidebar-bg: #1e1a16; /* Warm sidebar */
   --sidebar-border: #4a433a; /* Warm border */
+
+  /* Folder Component */
+  --folder-tab-bg: #8a7a5e;
+  --folder-tab-border: #6a5a42;
+  --folder-tab-text: #1a1815;
+  --folder-body-bg: #9a8a6e;
+  --folder-body-border: #6a5a42;
+  --folder-content-bg: var(--paper-light);
+  --folder-content-border: #3a332a;
+  --folder-ruled-line: rgba(0,0,0,0.1);
 }
 
 /* === GLITCH ANIMATION === */
@@ -167,9 +187,7 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .texture-overlay {
-    animation: none;
-  }
+
 }
 
 /* Typography Classes */
@@ -224,6 +242,13 @@ a:hover {
 }
 
 /* Layout Utilities */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
 .layout-container {
   display: flex;
   height: 100vh;

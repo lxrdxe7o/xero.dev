@@ -96,54 +96,43 @@ export default function BackgroundGears() {
 }
 
 const GearSVG = ({ size, teeth }: { size: number; teeth: number }) => {
-  const [d, setD] = useState('');
-
-  useEffect(() => {
-    const radius = size / 2;
-    const innerRadius = radius * 0.85;
-
-    let newD = '';
-    const angleStep = (2 * Math.PI) / teeth;
-
-    for (let i = 0; i < teeth; i++) {
-      const angle = i * angleStep;
-      const nextAngle = (i + 1) * angleStep;
-      const toothWidth = angleStep * 0.25;
-
-      const p1x = Math.cos(angle) * innerRadius + radius;
-      const p1y = Math.sin(angle) * innerRadius + radius;
-
-      const p2x = Math.cos(angle + toothWidth) * radius + radius;
-      const p2y = Math.sin(angle + toothWidth) * radius + radius;
-
-      const p3x = Math.cos(nextAngle - toothWidth) * radius + radius;
-      const p3y = Math.sin(nextAngle - toothWidth) * radius + radius;
-
-      const p4x = Math.cos(nextAngle) * innerRadius + radius;
-      const p4y = Math.sin(nextAngle) * innerRadius + radius;
-
-      if (i === 0) {
-        newD += `M${p1x},${p1y} L${p2x},${p2y} L${p3x},${p3y} L${p4x},${p4y}`;
-      } else {
-        newD += ` L${p1x},${p1y} L${p2x},${p2y} L${p3x},${p3y} L${p4x},${p4y}`;
-      }
-    }
-
-    newD += 'Z';
-    setD(newD);
-  }, [size, teeth]);
-
   const radius = size / 2;
   const innerRadius = radius * 0.85;
   const holeRadius = radius * 0.2;
 
-  if (!d) return null;
-
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-      <path d={d} fill="currentColor" />
+      <path d={makeGearPath(size, teeth)} fill="currentColor" suppressHydrationWarning />
       <circle cx={radius} cy={radius} r={holeRadius} fill="var(--paper)" />
       <circle cx={radius} cy={radius} r={innerRadius * 0.8} fill="none" stroke="var(--paper)" strokeWidth="2" strokeDasharray="5 5" />
     </svg>
   );
+};
+
+// ponytail: computed at module level instead of useEffect + useState on every mount
+function makeGearPath(size: number, teeth: number): string {
+  const radius = size / 2;
+  const innerRadius = radius * 0.85;
+  const angleStep = (2 * Math.PI) / teeth;
+  const toothWidth = angleStep * 0.25;
+
+  let d = '';
+  for (let i = 0; i < teeth; i++) {
+    const angle = i * angleStep;
+    const nextAngle = (i + 1) * angleStep;
+
+    const p1x = Math.cos(angle) * innerRadius + radius;
+    const p1y = Math.sin(angle) * innerRadius + radius;
+    const p2x = Math.cos(angle + toothWidth) * radius + radius;
+    const p2y = Math.sin(angle + toothWidth) * radius + radius;
+    const p3x = Math.cos(nextAngle - toothWidth) * radius + radius;
+    const p3y = Math.sin(nextAngle - toothWidth) * radius + radius;
+    const p4x = Math.cos(nextAngle) * innerRadius + radius;
+    const p4y = Math.sin(nextAngle) * innerRadius + radius;
+
+    d += i === 0
+      ? `M${p1x},${p1y} L${p2x},${p2y} L${p3x},${p3y} L${p4x},${p4y}`
+      : ` L${p1x},${p1y} L${p2x},${p2y} L${p3x},${p3y} L${p4x},${p4y}`;
+  }
+  return d + 'Z';
 };

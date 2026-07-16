@@ -16,13 +16,9 @@ type FolderCardProps = {
 export default function FolderCard({ name, description, link, index }: FolderCardProps) {
   const stamps = ['approved', 'confidential', 'top-secret'];
   const stampType = stamps[index % stamps.length] as 'approved' | 'confidential' | 'top-secret';
-  const pseudoRandom = (seed: number) => {
-    const x = Math.sin(seed + 1) * 10000;
-    return x - Math.floor(x);
-  };
-
-  const hasStamp = pseudoRandom(index) > 0.3;
-  const angle = -10 + pseudoRandom(index + 100) * 20;
+  // ponytail: deterministic stamp placement, pseudo-random noise wasn't buying anything
+  const hasStamp = index % 3 !== 0;
+  const angle = -10 + (index % 5) * 4;
   const tilt = useTilt(6);
 
   return (
@@ -89,8 +85,8 @@ export default function FolderCard({ name, description, link, index }: FolderCar
 
         .folder-tab {
           width: 40%;
-          background: #e6dcc8;
-          border: 1px solid #c9bfa8;
+          background: var(--folder-tab-bg);
+          border: 1px solid var(--folder-tab-border);
           border-bottom: none;
           border-radius: 6px 6px 0 0;
           padding: 4px 12px;
@@ -102,13 +98,13 @@ export default function FolderCard({ name, description, link, index }: FolderCar
         .tab-text {
           font-family: var(--font-mono);
           font-size: 0.7rem;
-          color: #1a1815;
+          color: var(--folder-tab-text);
           letter-spacing: 0.1em;
         }
 
         .folder-body {
-          background: #e6dcc8;
-          border: 1px solid #c9bfa8;
+          background: var(--folder-body-bg);
+          border: 1px solid var(--folder-body-border);
           border-radius: 0 6px 6px 6px;
           padding: var(--space-md);
           position: relative;
@@ -117,13 +113,13 @@ export default function FolderCard({ name, description, link, index }: FolderCar
             0deg,
             transparent,
             transparent 19px,
-            rgba(0,0,0,0.05) 20px
+            var(--folder-ruled-line) 20px
           );
         }
 
         .folder-content {
-          background: var(--paper-light);
-          border: 1px solid #eee;
+          background: var(--folder-content-bg);
+          border: 1px solid var(--folder-content-border);
           padding: var(--space-md);
           height: 100%;
           min-height: 180px;
@@ -172,37 +168,6 @@ export default function FolderCard({ name, description, link, index }: FolderCar
           margin-top: auto;
           border-top: 1px dashed var(--ink-dim);
           padding-top: 4px;
-        }
-
-        /* Dark Mode Overrides */
-        :global([data-theme="dark"]) .folder-tab {
-          background: #8a7a5e;
-          border-color: #6a5a42;
-        }
-
-        :global([data-theme="dark"]) .tab-text {
-          color: #1a1815;
-        }
-
-        :global([data-theme="dark"]) .folder-body {
-          background: #9a8a6e;
-          border-color: #6a5a42;
-          background-image: repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 19px,
-            rgba(0,0,0,0.1) 20px
-          );
-        }
-
-        :global([data-theme="dark"]) .folder-content {
-          background: var(--paper-light);
-          border-color: #3a332a;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-        }
-
-        :global([data-theme="dark"]) .project-title {
-          border-bottom-color: var(--ink);
         }
       `}</style>
     </motion.a>

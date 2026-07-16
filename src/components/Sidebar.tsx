@@ -1,27 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, useInView, animate } from 'framer-motion';
-
-function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: string }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
-  const [display, setDisplay] = useState('0');
-
-  useEffect(() => {
-    if (!isInView) return;
-    const controls = animate(0, target, {
-      duration: 1.5,
-      ease: 'easeOut',
-      onUpdate: (value) => {
-        setDisplay(Math.floor(value).toString());
-      },
-    });
-    return () => controls.stop();
-  }, [isInView, target]);
-
-  return <span ref={ref}>{display}{suffix}</span>;
-}
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 export default function Sidebar() {
   const [time, setTime] = useState<string>('');
@@ -67,7 +47,7 @@ export default function Sidebar() {
 
       <div className="stat-group">
         <label>PROJECTS:</label>
-        <div className="value"><AnimatedCounter target={9} /></div>
+        <div className="value">9</div>
       </div>
 
       <div className="stat-group">

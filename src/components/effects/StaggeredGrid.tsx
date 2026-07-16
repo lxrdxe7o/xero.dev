@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useAnimation } from '@/components/providers/AnimationProvider';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 interface StaggeredGridProps {
   children: React.ReactNode;
@@ -42,7 +42,7 @@ export default function StaggeredGrid({
   className = '',
   staggerDelay = 0.08,
 }: StaggeredGridProps) {
-  const { reducedMotion } = useAnimation();
+  const reducedMotion = useReducedMotion();
 
   if (reducedMotion) {
     return <div className={className}>{children}</div>;
